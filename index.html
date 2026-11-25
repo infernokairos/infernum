@@ -650,11 +650,38 @@
     }
 
     .lb-img-wrap {
+      position: relative;
       flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
       min-width: 0;
+    }
+
+    .lb-yt-cta {
+      position: absolute;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.72rem 1.25rem;
+      background: #ff0000;
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .lb-yt-cta:hover {
+      background: #dc2626;
+      transform: translateY(-1px);
+    }
+
+    .lb-yt-cta[hidden] {
+      display: none;
     }
 
     .lb-img-wrap img,
@@ -823,6 +850,14 @@
     .glass-card:hover {
       border-color: rgba(255, 255, 255, 0.28);
       transform: translateY(-2px);
+    }
+
+    .glass-card:focus {
+      outline: none;
+    }
+
+    .glass-card:focus-visible {
+      border-color: rgba(255, 255, 255, 0.45);
     }
 
     .glass-card:hover::before {
@@ -998,6 +1033,237 @@
       color: var(--hover-muted);
     }
 
+    /* ── INFERNO PROFILE TAB ── */
+    .glass-card.profile-card::before {
+      display: none;
+    }
+
+    .glass-card.profile-card:hover {
+      background: rgba(255, 255, 255, 0.03);
+      border-color: rgba(255, 255, 255, 0.14);
+      transform: none;
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 1.15rem;
+    }
+
+    .profile-avatar {
+      width: 78px;
+      height: 78px;
+      border-radius: 16px;
+      object-fit: cover;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.03);
+      flex-shrink: 0;
+      display: block;
+    }
+
+    .profile-id {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      min-width: 0;
+    }
+
+    .profile-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+
+    .profile-sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.66rem;
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
+    }
+
+    .profile-bio {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.8rem;
+    }
+
+    .profile-block-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      padding-bottom: 0.45rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 0.25rem;
+    }
+
+    .profile-kv-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .profile-kv-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.75rem;
+      font-size: 0.78rem;
+    }
+
+    .profile-kv-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.64rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      flex-shrink: 0;
+    }
+
+    .profile-kv-val {
+      color: var(--text-muted);
+      text-align: right;
+    }
+
+    .profile-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.48rem;
+    }
+
+    .profile-bullets li {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      position: relative;
+      padding-left: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .profile-bullets li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: var(--text-dim);
+      font-weight: 700;
+    }
+
+    /* ── JOURNEY MAP ── */
+    .journey-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 0.45rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 0.35rem;
+    }
+
+    .journey-head .profile-block-title {
+      padding-bottom: 0;
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+
+    .journey-sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .journey-map {
+      list-style: none;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 1.05rem;
+      padding-left: 1.35rem;
+      margin-top: 0.2rem;
+    }
+
+    .journey-step {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .journey-step::before {
+      content: '';
+      position: absolute;
+      left: -1.35rem;
+      top: 5px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #0a0a0c;
+      border: 1.5px solid rgba(255, 255, 255, 0.45);
+      z-index: 1;
+    }
+
+    .journey-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: calc(-1.35rem + 4px);
+      top: 15px;
+      bottom: calc(-1.05rem - 4px);
+      width: 1px;
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .journey-step.is-current::before {
+      background: #10b981;
+      border-color: #10b981;
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.7);
+    }
+
+    .journey-step.is-current:not(:last-child)::after {
+      background: linear-gradient(180deg, rgba(16, 185, 129, 0.7) 0%, rgba(255, 255, 255, 0.14) 100%);
+    }
+
+    .journey-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .journey-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .journey-year {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      flex-shrink: 0;
+    }
+
+    .journey-step.is-current .journey-year {
+      color: #34d399;
+    }
+
+    .journey-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
     /* ── SOCIALS LIST ── */
     .socials-grid {
       display: grid;
@@ -1102,6 +1368,7 @@
         padding: 0.35rem 0.1rem 0.75rem 0.1rem;
       }
       .socials-grid,
+      .profile-grid,
       .cgi-year-cols {
         grid-template-columns: 1fr;
       }
@@ -1138,9 +1405,18 @@
         <div class="tab-indicator" id="tab-indicator" aria-hidden="true"></div>
         <button
           class="tab-btn"
-          id="tab-works"
+          id="tab-inferno"
           role="tab"
           aria-selected="true"
+          aria-controls="panel-inferno"
+          data-tab="inferno"
+          type="button"
+        >Inferno</button>
+        <button
+          class="tab-btn"
+          id="tab-works"
+          role="tab"
+          aria-selected="false"
           aria-controls="panel-works"
           data-tab="works"
           type="button"
@@ -1157,12 +1433,110 @@
       </nav>
     </header>
 
-    <!-- WORKS PANEL -->
+    <!-- INFERNO PROFILE PANEL -->
     <section
       class="tab-panel is-active"
+      id="panel-inferno"
+      role="tabpanel"
+      aria-labelledby="tab-inferno"
+    >
+      <div class="section-eyebrow">
+        <span>Personal Profile</span>
+        <span>Polymath</span>
+      </div>
+
+      <article class="glass-card profile-card">
+        <div class="card-inner">
+          <div class="profile-header">
+            <img
+              class="profile-avatar"
+              src="assets/profile_me.jpg"
+              alt="John Moses Gurala (Inferno Kairos)"
+            />
+            <div class="profile-id">
+              <h2 class="profile-name">Inferno Kairos</h2>
+              <span class="profile-sub">@infernokairos · Pithapuram, India</span>
+            </div>
+          </div>
+          <p class="profile-bio">Curious about a wide range of concepts, grounded in straight and rational thinking. Drawn to simplicity, minimalism, and the ongoing work of understanding and improving myself.</p>
+        </div>
+      </article>
+
+      <div class="profile-grid">
+        <article class="glass-card profile-card">
+          <div class="card-inner">
+            <span class="profile-block-title">Details</span>
+            <ul class="profile-kv-list">
+              <li><span class="profile-kv-label">Given</span><span class="profile-kv-val">John Moses Gurala</span></li>
+              <li><span class="profile-kv-label">Chosen</span><span class="profile-kv-val">Inferno Kairos</span></li>
+              <li><span class="profile-kv-label">Born</span><span class="profile-kv-val">16 July 2006</span></li>
+              <li><span class="profile-kv-label">Place</span><span class="profile-kv-val">Pithapuram, India</span></li>
+              <li><span class="profile-kv-label">Role</span><span class="profile-kv-val">Designer</span></li>
+              <li><span class="profile-kv-label">Focus</span><span class="profile-kv-val">Wide area · Polymath</span></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="glass-card profile-card">
+          <div class="card-inner">
+            <span class="profile-block-title">Interests</span>
+            <ul class="profile-bullets">
+              <li>Philosophy</li>
+              <li>Science &amp; Books</li>
+              <li>Software &amp; UI/UX Design</li>
+              <li>Films, CG &amp; Art Forms</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+
+      <article class="glass-card profile-card">
+        <div class="card-inner">
+          <div class="journey-head">
+            <span class="profile-block-title">Journey</span>
+            <span class="journey-sub">Timeline</span>
+          </div>
+          <ol class="journey-map">
+            <li class="journey-step is-current">
+              <div class="journey-row">
+                <h3 class="journey-title">Aditya University, Surampalem</h3>
+                <span class="journey-year">2025 – Present</span>
+              </div>
+              <p class="journey-desc">Pursuing Mechanical Engineering.</p>
+            </li>
+            <li class="journey-step">
+              <div class="journey-row">
+                <h3 class="journey-title">UCEED / NID — The Enlightenment</h3>
+                <span class="journey-year">2024 – 2025</span>
+              </div>
+              <p class="journey-desc">Appeared for UCEED and NID.</p>
+            </li>
+            <li class="journey-step">
+              <div class="journey-row">
+                <h3 class="journey-title">Narayana Jr College, Kakinada</h3>
+                <span class="journey-year">2024</span>
+              </div>
+              <p class="journey-desc">Completed +2.</p>
+            </li>
+            <li class="journey-step">
+              <div class="journey-row">
+                <h3 class="journey-title">Aditya Public School, Pithapuram</h3>
+                <span class="journey-year">2022</span>
+              </div>
+              <p class="journey-desc">Finished 10th grade.</p>
+            </li>
+          </ol>
+        </div>
+      </article>
+    </section>
+
+    <!-- WORKS PANEL -->
+    <section
+      class="tab-panel"
       id="panel-works"
       role="tabpanel"
       aria-labelledby="tab-works"
+      hidden
     >
       <div class="works-toolbar">
         <div class="works-switch" role="group" aria-label="Work category">
@@ -1385,7 +1759,7 @@
                 </svg>
               </div>
               <div class="social-text">
-                <span class="social-name">YouTube (Films)</span>
+                <span class="social-name">YouTube (2nd)</span>
                 <span class="social-handle">@Infernosfilm</span>
               </div>
             </div>
@@ -1469,7 +1843,11 @@
       <div class="lb-img-wrap">
         <img id="lb-img" src="" alt="" />
         <video id="lb-video" controls autoplay loop muted playsinline hidden></video>
-        <iframe id="lb-yt" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen hidden></iframe>
+        <iframe id="lb-yt" title="YouTube video player" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen hidden></iframe>
+        <a class="lb-yt-cta" id="lb-yt-fallback" href="#" target="_blank" rel="noopener" hidden>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          <span>Watch on YouTube ↗</span>
+        </a>
       </div>
       <button class="lb-nav" id="lb-next" type="button" aria-label="Next render">→</button>
     </div>
@@ -1684,7 +2062,7 @@
     });
 
     const initialHash = window.location.hash.replace('#', '');
-    activateTab(tabButtons.some((btn) => btn.dataset.tab === initialHash) ? initialHash : 'works', false);
+    activateTab(tabButtons.some((btn) => btn.dataset.tab === initialHash) ? initialHash : 'inferno', false);
 
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(() => {
@@ -1885,6 +2263,7 @@
     const lbImg = document.getElementById('lb-img');
     const lbVideo = document.getElementById('lb-video');
     const lbYt = document.getElementById('lb-yt');
+    const lbYtFallback = document.getElementById('lb-yt-fallback');
     const lbExtLink = document.getElementById('lb-ext-link');
     const lbPrev = document.getElementById('lb-prev');
     const lbNext = document.getElementById('lb-next');
@@ -1916,18 +2295,31 @@
       lbCounter.textContent = `${String(activeImageIdx + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
 
       if (isYouTubeItem(item)) {
-        lbImg.hidden = true;
-        lbImg.src = '';
         lbVideo.pause();
         lbVideo.hidden = true;
         lbVideo.src = '';
-        lbYt.hidden = false;
-        lbYt.src = `https://www.youtube-nocookie.com/embed/${item.yt}?autoplay=1&rel=0`;
         lbExtLink.hidden = false;
         lbExtLink.href = item.url;
+
+        if (window.location.protocol === 'file:') {
+          lbYt.hidden = true;
+          lbYt.src = '';
+          lbImg.hidden = false;
+          lbImg.src = getThumbSrc(item);
+          lbImg.alt = `${project.title} preview`;
+          lbYtFallback.hidden = false;
+          lbYtFallback.href = item.url;
+        } else {
+          lbYtFallback.hidden = true;
+          lbImg.hidden = true;
+          lbImg.src = '';
+          lbYt.hidden = false;
+          lbYt.src = `https://www.youtube.com/embed/${item.yt}?autoplay=1&rel=0`;
+        }
       } else if (isVideoSrc(item)) {
         lbYt.hidden = true;
         lbYt.src = '';
+        lbYtFallback.hidden = true;
         lbExtLink.hidden = true;
         lbImg.hidden = true;
         lbImg.src = '';
@@ -1937,6 +2329,7 @@
       } else {
         lbYt.hidden = true;
         lbYt.src = '';
+        lbYtFallback.hidden = true;
         lbExtLink.hidden = true;
         lbVideo.pause();
         lbVideo.hidden = true;
@@ -1986,6 +2379,7 @@
           lbVideo.pause();
           lbVideo.src = '';
           lbYt.src = '';
+          lbYtFallback.hidden = true;
           lbExtLink.hidden = true;
         }
       }, 220);
