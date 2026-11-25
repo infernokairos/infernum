@@ -259,7 +259,8 @@
     body.intro-active .status-dot,
     body.intro-active .tab-bar,
     body.intro-active .works-toolbar,
-    body.intro-active .section-eyebrow {
+    body.intro-active .section-eyebrow,
+    body.intro-active .section-note {
       opacity: 0;
       transform: translateY(6px);
     }
@@ -271,7 +272,8 @@
 
     .tab-bar,
     .works-toolbar,
-    .section-eyebrow {
+    .section-eyebrow,
+    .section-note {
       transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
@@ -384,7 +386,7 @@
       animation: panelEnter 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    .cgi-note {
+    .section-note {
       font-size: 0.8rem;
       line-height: 1.55;
       color: var(--text-muted);
@@ -394,18 +396,53 @@
       background: rgba(255, 255, 255, 0.015);
     }
 
+    #works-software .section-note {
+      border-radius: 12px;
+    }
+
     .cgi-grid {
-      column-count: 2;
-      column-gap: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .cgi-year-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .cgi-year-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.64rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      padding: 0 0.1rem 0.45rem 0.1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cgi-year-cols {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.9rem;
+      align-items: start;
+    }
+
+    .cgi-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
     }
 
     .glass-card.cgi-card {
       appearance: none;
       text-align: left;
-      display: inline-flex;
+      display: flex;
       width: 100%;
-      margin-bottom: 0.9rem;
-      break-inside: avoid;
       cursor: pointer;
       font: inherit;
       border-radius: 0;
@@ -1064,11 +1101,9 @@
       .tab-btn {
         padding: 0.35rem 0.1rem 0.75rem 0.1rem;
       }
-      .socials-grid {
+      .socials-grid,
+      .cgi-year-cols {
         grid-template-columns: 1fr;
-      }
-      .cgi-grid {
-        column-count: 1;
       }
     }
   </style>
@@ -1148,6 +1183,7 @@
       </div>
 
       <div class="works-group is-active" id="works-software">
+        <p class="section-note">I built these applications simply because I needed them myself—personal tools for my own workflow, not commercial products.</p>
 
       <a class="glass-card" data-brand="utopia" href="/download-utopia">
         <div class="card-inner">
@@ -1219,7 +1255,7 @@
       </div>
 
       <div class="works-group" id="works-cgi" hidden>
-        <p class="cgi-note">I went through plenty of enjoyment and frustration building these. At one point I decided to become a CG generalist because I love designing things—now it lives on as a creative hobby.</p>
+        <p class="section-note">I went through plenty of enjoyment and frustration building these. At one point I decided to become a CG generalist because I love designing things—now it lives on as a creative hobby. Grateful to my friend Srimun for supporting me across all of these projects.</p>
         <div class="cgi-grid" id="cgi-grid"></div>
       </div>
     </section>
@@ -1500,7 +1536,7 @@
       const headerDot = document.getElementById('header-dot');
       const tabBar = document.querySelector('.tab-bar');
       const topBar = document.querySelector('.top-bar');
-      const toolbars = document.querySelectorAll('.works-toolbar, .section-eyebrow');
+      const toolbars = document.querySelectorAll('.works-toolbar, .section-eyebrow, .section-note');
       const cards = document.querySelectorAll('.glass-card');
 
       setTimeout(() => {
@@ -1688,6 +1724,14 @@
     // ── CGI RENDERS GALLERY & LIGHTBOX ──────────────────────────────
     const cgiProjects = [
       {
+        title: 'Procedural Terrain',
+        year: '2026',
+        images: [
+          'assets/cgi_renders/2026 procedural terrain/image (1).jpg',
+          'assets/cgi_renders/2026 procedural terrain/image (2).jpg'
+        ]
+      },
+      {
         title: 'Temple Model',
         year: '2026',
         images: [
@@ -1712,17 +1756,9 @@
         ]
       },
       {
-        title: 'Space Look',
+        title: 'Perfect Loop',
         year: '2026',
-        images: ['assets/cgi_renders/2026 space look/image.jpg']
-      },
-      {
-        title: 'Procedural Terrain',
-        year: '2026',
-        images: [
-          'assets/cgi_renders/2026 procedural terrain/image (1).jpg',
-          'assets/cgi_renders/2026 procedural terrain/image (2).jpg'
-        ]
+        images: ['assets/cgi_renders/2026 perfect loop/video.mp4']
       },
       {
         title: 'N Pipes',
@@ -1730,9 +1766,9 @@
         images: ['assets/cgi_renders/2026 N pipes/image.jpg']
       },
       {
-        title: 'Perfect Loop',
+        title: 'Space Look',
         year: '2026',
-        images: ['assets/cgi_renders/2026 perfect loop/video.mp4']
+        images: ['assets/cgi_renders/2026 space look/image.jpg']
       },
       {
         title: 'Chair',
@@ -1962,37 +1998,72 @@
       renderLightbox();
     }
 
-    if (cgiGrid) {
-      cgiGrid.innerHTML = cgiProjects.map((project, idx) => {
-        const cover = project.images[0];
-        const ytCover = isYouTubeItem(cover);
-        const videoCover = isVideoSrc(cover);
-        const mediaHtml = videoCover
-          ? `<video src="${cover}" autoplay loop muted playsinline></video>`
-          : `<img src="${getThumbSrc(cover)}" alt="${project.title} (${project.year})" loading="lazy" />`;
-        const playHtml = ytCover
-          ? `<span class="cgi-play-badge" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>`
-          : '';
-        const badgeHtml = videoCover
-          ? `<span class="cgi-shots-badge">Loop</span>`
-          : ytCover
-            ? `<span class="cgi-shots-badge">${project.images.length > 1 ? `${project.images.length} parts` : 'Video'}</span>`
-            : (project.images.length > 1 ? `<span class="cgi-shots-badge">${project.images.length} shots</span>` : '');
+    function renderCgiCard(project, idx) {
+      const cover = project.images[0];
+      const ytCover = isYouTubeItem(cover);
+      const videoCover = isVideoSrc(cover);
+      const mediaHtml = videoCover
+        ? `<video src="${cover}" autoplay loop muted playsinline></video>`
+        : `<img src="${getThumbSrc(cover)}" alt="${project.title} (${project.year})" loading="lazy" />`;
+      const playHtml = ytCover
+        ? `<span class="cgi-play-badge" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>`
+        : '';
+      const badgeHtml = videoCover
+        ? `<span class="cgi-shots-badge">Loop</span>`
+        : ytCover
+          ? `<span class="cgi-shots-badge">${project.images.length > 1 ? `${project.images.length} parts` : 'Video'}</span>`
+          : (project.images.length > 1 ? `<span class="cgi-shots-badge">${project.images.length} shots</span>` : '');
+
+      return `
+        <button class="glass-card cgi-card" type="button" data-cgi-idx="${idx}">
+          <div class="cgi-card-inner">
+            <div class="cgi-frame">
+              ${mediaHtml}
+              ${playHtml}
+              ${badgeHtml}
+            </div>
+            <div class="cgi-meta">
+              <span class="cgi-title">${project.title}</span>
+              <span>${project.year}</span>
+            </div>
+          </div>
+        </button>
+      `;
+    }
+
+    const mobileQuery = window.matchMedia('(max-width: 520px)');
+
+    function renderCgiGrid() {
+      if (!cgiGrid) return;
+      const years = Array.from(new Set(cgiProjects.map((p) => p.year)))
+        .sort((a, b) => Number(b) - Number(a));
+      const isMobile = mobileQuery.matches;
+
+      cgiGrid.innerHTML = years.map((year) => {
+        const items = cgiProjects
+          .map((project, idx) => ({ project, idx }))
+          .filter((entry) => entry.project.year === year);
+
+        let colsHtml = '';
+        if (isMobile) {
+          colsHtml = `<div class="cgi-col">${items.map((e) => renderCgiCard(e.project, e.idx)).join('')}</div>`;
+        } else {
+          const left = items.filter((_, i) => i % 2 === 0);
+          const right = items.filter((_, i) => i % 2 === 1);
+          colsHtml = `
+            <div class="cgi-col">${left.map((e) => renderCgiCard(e.project, e.idx)).join('')}</div>
+            <div class="cgi-col">${right.map((e) => renderCgiCard(e.project, e.idx)).join('')}</div>
+          `;
+        }
 
         return `
-          <button class="glass-card cgi-card" type="button" data-cgi-idx="${idx}">
-            <div class="cgi-card-inner">
-              <div class="cgi-frame">
-                ${mediaHtml}
-                ${playHtml}
-                ${badgeHtml}
-              </div>
-              <div class="cgi-meta">
-                <span class="cgi-title">${project.title}</span>
-                <span>${project.year}</span>
-              </div>
+          <div class="cgi-year-section">
+            <div class="cgi-year-head">
+              <span>${year}</span>
+              <span>${String(items.length).padStart(2, '0')}</span>
             </div>
-          </button>
+            <div class="cgi-year-cols">${colsHtml}</div>
+          </div>
         `;
       }).join('');
 
@@ -2000,6 +2071,9 @@
         card.addEventListener('click', () => openLightbox(Number(card.dataset.cgiIdx)));
       });
     }
+
+    renderCgiGrid();
+    mobileQuery.addEventListener('change', renderCgiGrid);
 
     lbPrev.addEventListener('click', () => stepLightbox(-1));
     lbNext.addEventListener('click', () => stepLightbox(1));
