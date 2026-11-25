@@ -295,7 +295,7 @@
       left: 0;
       height: 2px;
       border-radius: 999px;
-      background: #ffffff;
+      background: transparent;
       transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       pointer-events: none;
     }
@@ -1051,11 +1051,34 @@
       padding-left: 4rem;
     }
 
+    .profile-avatar-wrap {
+      width: 140px;
+      height: 140px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      clip-path: polygon(50% 0%, 79% 10%, 98% 35%, 98% 65%, 79% 90%, 50% 100%, 21% 90%, 2% 65%, 2% 35%, 21% 10%);
+      background: transparent;
+      animation: stroke-reveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    @keyframes stroke-reveal {
+      0%   { transform: scale(0.82); opacity: 0; filter: brightness(0); }
+      35%  { transform: scale(1.04); opacity: 1; filter: brightness(5) drop-shadow(0 0 30px #fff) drop-shadow(0 0 60px rgba(255,255,255,0.6)); }
+      65%  { transform: scale(0.98); filter: brightness(2) drop-shadow(0 0 12px rgba(255,255,255,0.5)); }
+      100% { transform: scale(1);    filter: drop-shadow(0 0 5px rgba(255,255,255,0.25)); }
+    }
+
+    .profile-header-wrap {
+      position: relative;
+      display: inline-flex;
+    }
+
     .profile-avatar {
       width: 130px;
       height: 130px;
       object-fit: cover;
-      flex-shrink: 0;
       display: block;
       clip-path: polygon(50% 0%, 79% 10%, 98% 35%, 98% 65%, 79% 90%, 50% 100%, 21% 90%, 2% 65%, 2% 35%, 21% 10%);
     }
@@ -1072,7 +1095,24 @@
       font-size: 1.3rem;
       font-weight: 700;
       letter-spacing: -0.01em;
-      color: var(--text);
+      background: linear-gradient(105deg, #888 0%, #fff 25%, #ccc 45%, #fff 60%, #888 100%);
+      background-size: 250% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: name-reveal 1s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both,
+                 name-shine  1.8s ease-in-out 1s forwards;
+    }
+
+    @keyframes name-reveal {
+      0%   { opacity: 0; transform: translateY(10px); letter-spacing: 0.15em; filter: blur(6px); }
+      60%  { opacity: 1; filter: blur(0); }
+      100% { opacity: 1; transform: translateY(0); letter-spacing: -0.01em; }
+    }
+
+    @keyframes name-shine {
+      0%   { background-position: 200% center; }
+      100% { background-position: -50% center; }
     }
 
     .profile-sub {
@@ -1437,17 +1477,21 @@
         <span>Personal Profile</span>
       </div>
 
-      <div class="profile-header">
-            <img
-              class="profile-avatar"
-              src="assets/profile_me.jpg"
-              alt="John Moses Gurala (Inferno Kairos)"
-            />
-            <div class="profile-id">
-              <h2 class="profile-name">Inferno Kairos</h2>
-              <span class="profile-sub">Polymath</span>
+      <div class="profile-header-wrap">
+        <div class="profile-header">
+              <div class="profile-avatar-wrap">
+                <img
+                  class="profile-avatar"
+                  src="assets/profile_me.jpg"
+                  alt="John Moses Gurala (Inferno Kairos)"
+                />
+              </div>
+              <div class="profile-id">
+                <h2 class="profile-name">Inferno Kairos</h2>
+                <span class="profile-sub">Polymath</span>
+              </div>
             </div>
-          </div>
+      </div>
 
       <div class="profile-grid">
         <article class="glass-card profile-card">
@@ -2471,5 +2515,98 @@
     });
 
   </script>
+
+</body>
+</html>
+
+    const wrap   = canvas.parentElement;          // .profile-header-wrap
+    const header = wrap.querySelector('.profile-header');
+
+    function resize() {
+      canvas.width  = wrap.offsetWidth;
+      canvas.height = wrap.offsetHeight;
+    }
+    resize();
+    new ResizeObserver(resize).observe(wrap);
+
+    /* Spawn zones: avatar centre + name centre */
+    function spawnZones() {
+      const avatarEl = header.querySelector('.profile-avatar-wrap');
+      const nameEl   = header.querySelector('.profile-name');
+      const wRect    = wrap.getBoundingClientRect();
+      const zones    = [];
+
+      [avatarEl, nameEl].forEach(el => {
+        if (!el) return;
+        const r = el.getBoundingClientRect();
+        zones.push({
+          cx: r.left - wRect.left + r.width  / 2,
+          cy: r.top  - wRect.top  + r.height / 2,
+          spread: r.width * 0.45
+        });
+      });
+      return zones;
+    }
+
+    class Star {
+      constructor(zone) {
+        this.x     = zone.cx + (Math.random() - 0.5) * zone.spread * 2;
+        this.y     = zone.cy + (Math.random() * 0.3 + 0.2) * (canvas.height * 0.3);
+        this.size  = Math.random() * 2.2 + 0.4;
+        this.vx    = (Math.random() - 0.5) * 0.6;
+        this.vy    = -(Math.random() * 2.4 + 0.8);   // upward momentum
+        this.alpha = Math.random() * 0.6 + 0.4;
+        this.life  = 1.0;
+        this.decay = Math.random() * 0.014 + 0.006;
+      }
+      update() {
+        this.vy   *= 0.985;                           // ease off like real momentum
+        this.x    += this.vx;
+        this.y    += this.vy;
+        this.life -= this.decay;
+        this.alpha = this.life * 0.9;
+      }
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, this.alpha);
+        ctx.fillStyle   = '#ffffff';
+        ctx.shadowBlur  = 5;
+        ctx.shadowColor = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+      get dead() { return this.life <= 0; }
+    }
+
+    const stars = [];
+    let   frame = 0;
+
+    function loop() {
+      requestAnimationFrame(loop);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      /* Spawn ~2 new stars every 3 frames */
+      if (frame % 3 === 0) {
+        const zones = spawnZones();
+        if (zones.length) {
+          const z = zones[Math.floor(Math.random() * zones.length)];
+          stars.push(new Star(z));
+          if (Math.random() > 0.5) stars.push(new Star(z));
+        }
+      }
+
+      for (let i = stars.length - 1; i >= 0; i--) {
+        stars[i].update();
+        stars[i].draw();
+        if (stars[i].dead) stars.splice(i, 1);
+      }
+      frame++;
+    }
+    loop();
+  })();
+  </script>
+
 </body>
 </html>
