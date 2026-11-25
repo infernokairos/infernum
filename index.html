@@ -401,56 +401,39 @@
       opacity: 1;
     }
 
-    /* App & platform solid bright gradient palettes */
+    /* App & platform rich gradient palettes */
     .glass-card[data-brand="github"] {
-      --brand-gradient: linear-gradient(120deg, #ffffff, #cbd5e1, #94a3b8, #ffffff);
-      --hover-text: #09090b;
-      --hover-muted: rgba(9, 9, 11, 0.72);
-      --hover-icon-bg: #111113;
-      --hover-icon-border: rgba(9, 9, 11, 0.2);
+      --brand-gradient: linear-gradient(120deg, #1f242d, #374151, #4b5563, #1f242d);
     }
     .glass-card[data-brand="instagram"] {
-      --brand-gradient: linear-gradient(120deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888, #f09433);
+      --brand-gradient: linear-gradient(120deg, #9a3412, #be185d, #7e22ce, #9a3412);
     }
     .glass-card[data-brand="linkedin"] {
-      --brand-gradient: linear-gradient(120deg, #0a66c2, #0099ff, #0052a3, #0a66c2);
+      --brand-gradient: linear-gradient(120deg, #07417b, #0a66c2, #0284c7, #07417b);
     }
     .glass-card[data-brand="letterboxd"] {
-      --brand-gradient: linear-gradient(120deg, #ff8000, #00e054, #40bcf4, #ff8000);
-      --hover-text: #07090b;
-      --hover-muted: rgba(7, 9, 11, 0.75);
-      --hover-icon-bg: rgba(7, 9, 11, 0.88);
-      --hover-icon-border: rgba(7, 9, 11, 0.2);
+      --brand-gradient: linear-gradient(120deg, #c2410c, #15803d, #0369a1, #c2410c);
     }
     .glass-card[data-brand="youtube"] {
-      --brand-gradient: linear-gradient(120deg, #ff0000, #ff3b3b, #c90000, #ff0000);
+      --brand-gradient: linear-gradient(120deg, #7f1d1d, #dc2626, #991b1b, #7f1d1d);
     }
     .glass-card[data-brand="telegram"] {
-      --brand-gradient: linear-gradient(120deg, #26a5e4, #00c6ff, #0088cc, #26a5e4);
+      --brand-gradient: linear-gradient(120deg, #0c4a6e, #0284c7, #0ea5e9, #0c4a6e);
     }
     .glass-card[data-brand="discord"] {
-      --brand-gradient: linear-gradient(120deg, #5865f2, #7983ff, #404eed, #5865f2);
+      --brand-gradient: linear-gradient(120deg, #312e81, #4f46e5, #5865f2, #312e81);
     }
     .glass-card[data-brand="playstore"] {
-      --brand-gradient: linear-gradient(120deg, #4285f4, #34a853, #fbbc04, #ea4335, #4285f4);
-      --hover-text: #09090b;
-      --hover-muted: rgba(9, 9, 11, 0.74);
-      --hover-icon-bg: rgba(9, 9, 11, 0.88);
-      --hover-icon-border: rgba(9, 9, 11, 0.2);
+      --brand-gradient: linear-gradient(120deg, #1e3a8a, #15803d, #a16207, #b91c1c, #1e3a8a);
     }
     .glass-card[data-brand="utopia"] {
-      --brand-gradient: linear-gradient(120deg, #4c1d95, #7c3aed, #a78bfa, #4c1d95);
+      --brand-gradient: linear-gradient(120deg, #2e1065, #5b21b6, #4338ca, #2e1065);
     }
     .glass-card[data-brand="interceptor"] {
-      --brand-gradient: linear-gradient(120deg, #029c1c, #16a34a, #4ade80, #029c1c);
+      --brand-gradient: linear-gradient(120deg, #064e3b, #047857, #059669, #064e3b);
     }
     .glass-card[data-brand="kairos"] {
-      --brand-gradient: linear-gradient(120deg, #ffffff, #e4e4e7, #d4d4d8, #ffffff);
-      --hover-text: #09090b;
-      --hover-muted: rgba(9, 9, 11, 0.74);
-      --hover-badge-bg: rgba(9, 9, 11, 0.12);
-      --hover-badge-border: rgba(9, 9, 11, 0.22);
-      --hover-badge-text: #09090b;
+      --brand-gradient: linear-gradient(120deg, #18181b, #3f3f46, #52525b, #18181b);
     }
 
     .work-brand-row {
@@ -465,9 +448,15 @@
       height: 44px;
       border-radius: 11px;
       object-fit: cover;
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
       flex-shrink: 0;
       display: block;
+      transition: border-color 0.3s ease;
+    }
+
+    .glass-card:hover .work-app-logo {
+      border-color: rgba(255, 255, 255, 0.28);
     }
 
     .socials-grid .glass-card:hover .card-arrow {
